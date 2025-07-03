@@ -11,8 +11,8 @@ if (hexo.config.lazy_load.all) {
   log.info("Add lazy load attribute to all image");
   hexo.extend.filter.register(
     "after_render:html",
-    function(html) {
-      html = replace(html);
+    function (html) {
+      html = replace(html, "", hexo.config.lazy_load);
       return html;
     },
     15
@@ -21,7 +21,7 @@ if (hexo.config.lazy_load.all) {
   log.info("Add lazy load attribute to all post");
   hexo.extend.filter.register(
     "after_post_render",
-    function(data) {
+    function (data) {
       if (
         hexo.config.post_asset_folder === true &&
         hexo.config.lazy_load.width_height !== false
@@ -31,10 +31,11 @@ if (hexo.config.lazy_load.all) {
           path.join(
             hexo.source_dir,
             data.source.substring(0, data.source.length - 3)
-          )
+          ),
+          hexo.config.lazy_load
         );
       }
-      data.content = replace(data.content, "");
+      data.content = replace(data.content, "", hexo.config.lazy_load);
       return data;
     },
     15

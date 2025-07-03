@@ -1,7 +1,7 @@
 {
   "name": "hexo-native-lazy-load",
-  "version": "1.1.2",
-  "description": "add native lazy load to hexo page as well as optional fallback",
+  "version": "1.2.0",
+  "description": "add native lazy load and responsive srcset to hexo page as well as optional fallback",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
