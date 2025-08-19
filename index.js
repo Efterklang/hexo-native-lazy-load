@@ -1,6 +1,7 @@
 const path = require("path");
 const replace = require("./lib/replace");
 const addScript = require("./lib/add_lazysizes");
+const addProgressive = require("./lib/add_progressive");
 const log = hexo.log;
 
 if (!hexo.config.lazy_load || !hexo.config.lazy_load.enable || process.env.CI !== 'true') {
@@ -46,4 +47,15 @@ if (hexo.config.lazy_load.fallback !== false) {
   // default enable
   log.info("Add fallback lazy load using lazysizes");
   hexo.extend.filter.register("after_render:html", addScript, 25);
+}
+
+// progressive runtime 注入（在所有 HTML 渲染后执行）
+if (
+  hexo.config.lazy_load &&
+  hexo.config.lazy_load.progressive_img &&
+  hexo.config.lazy_load.progressive_img.enable === true
+) {
+  log.info("Enable progressive image loader");
+  // 选择在 24 优先于 lazysizes(25)，确保占位图和 data-* 已就位
+  hexo.extend.filter.register("after_render:html", addProgressive, 24);
 }
